@@ -1096,8 +1096,11 @@ int main_continued(void)
     err = vm_create_default_irq_controller(&vm);
     assert(!err);
 
+    size_t aff_size = sizeof(vcpu_affinity)/sizeof(vcpu_affinity[0]);
     for (int i = 0; i < NUM_VCPUS; i++) {
-        vm_vcpu_t *new_vcpu = create_vmm_plat_vcpu(&vm, VM_PRIO - 1);
+        int aff = i;
+        if(i < aff_size) aff = vcpu_affinity[i];
+        vm_vcpu_t *new_vcpu = create_vmm_plat_vcpu(&vm, VM_PRIO - 1, aff);
         assert(new_vcpu);
     }
     vm_vcpu_t *vm_vcpu = vm.vcpus[BOOT_VCPU];
