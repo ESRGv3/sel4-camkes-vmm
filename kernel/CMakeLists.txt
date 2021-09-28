@@ -182,6 +182,7 @@ add_compile_options(
     -Wpointer-arith
     -Wno-nonnull
     -ffreestanding
+    -mno-outline-atomics 
 )
 
 # Add all the common flags to the linker args
