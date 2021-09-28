@@ -806,7 +806,7 @@ static int load_linux(vm_t *vm, const char *kernel_name, const char *dtb_name, c
 
     /* Attempt to load initrd if provided */
     guest_image_t initrd_image;
-    if (config_set(CONFIG_VM_INITRD_FILE)) {
+    if (config_set(CONFIG_VM_INITRD_FILE) && strcmp(initrd_name, "") != 0) {
         err = vm_load_guest_module(vm, initrd_name, initrd_addr, 0, &initrd_image);
         void *initrd = (void *)initrd_image.load_paddr;
         if (!initrd || err) {
@@ -835,7 +835,7 @@ static int load_linux(vm_t *vm, const char *kernel_name, const char *dtb_name, c
         vm_ram_touch(vm, dtb_addr, size_gen, load_generated_dtb, gen_fdt);
 
         dtb = dtb_addr;
-    } else {
+    } else if(strcmp(dtb_name, "") != 0) {
         /* Load device tree */
         guest_image_t dtb_image;
         err = vm_load_guest_module(vm, dtb_name, dtb_addr, 0, &dtb_image);
