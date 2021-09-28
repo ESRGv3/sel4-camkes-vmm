@@ -910,6 +910,8 @@ static memory_fault_result_t handle_vgic_dist_write_fault(vm_t *vm, vm_vcpu_t *v
         break;
     case RANGE32(GIC_DIST_ICFGR0, GIC_DIST_ICFGRN):
         /* Not supported */
+        reg_offset = GIC_DIST_REGN(offset, GIC_DIST_ICFGR0);
+        gic_dist->config[reg_offset] = fault_emulate(fault, gic_dist->config[reg_offset]);
         break;
     case RANGE32(0xD00, 0xDE4):
         break;
