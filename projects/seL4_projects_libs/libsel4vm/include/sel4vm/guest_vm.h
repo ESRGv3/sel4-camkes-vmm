@@ -132,6 +132,7 @@ struct vm_vcpu {
     struct vm_tcb tcb;
     /* Id of vcpu */
     unsigned int vcpu_id;
+    int aff;
     /* The target core the vcpu is assigned to */
     int target_cpu;
     /* is the vcpu online */

@@ -56,7 +56,7 @@ int vm_init(vm_t *vm, vka_t *vka, simple_t *host_simple, vspace_t host_vspace,
     return 0;
 }
 
-vm_vcpu_t *vm_create_vcpu(vm_t *vm, int priority)
+vm_vcpu_t *vm_create_vcpu(vm_t *vm, int priority, int aff)
 {
     int err;
     if (vm->num_vcpus >= CONFIG_MAX_NUM_NODES) {
@@ -74,6 +74,7 @@ vm_vcpu_t *vm_create_vcpu(vm_t *vm, int priority)
     vcpu_new->tcb.priority = priority;
     vcpu_new->vcpu_online = false;
     vcpu_new->target_cpu = -1;
+    vcpu_new->aff = aff;
     err = vm_create_vcpu_arch(vm, vcpu_new);
     assert(!err);
     vm->vcpus[vm->num_vcpus] = vcpu_new;
