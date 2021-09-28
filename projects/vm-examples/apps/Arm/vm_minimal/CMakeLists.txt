@@ -1,9 +1,3 @@
-#
-# Copyright 2018, Data61, CSIRO (ABN 41 687 119 230)
-#
-# SPDX-License-Identifier: BSD-2-Clause
-#
-
 cmake_minimum_required(VERSION 3.8.2)
 
 project(camkes-arm-tk1-vm C)
@@ -124,6 +118,23 @@ elseif("${KernelARMPlatform}" STREQUAL "odroidc2")
         "${CAMKES_VM_IMAGES_DIR}/odroidc2/linux-dtb"
         ${rootfs_file}
         "0x2d700000"
+        dtb_gen_target
+        output_dtb_location
+    )
+    AddToFileServer("linux-dtb" "${output_dtb_location}" DEPENDS dtb_gen_target)
+elseif("${KernelARMPlatform}" STREQUAL "zcu102")
+    find_package(camkes-vm-linux REQUIRED)
+    include(${CAMKES_VM_LINUX_HELPERS_PATH})
+    # set(cpp_flags "-DKERNELARMPLATFORM_QEMU-ARM-VIRT")
+
+    AddToFileServer("linux" "${CAMKES_VM_IMAGES_DIR}/zcu102/linux")
+    set(rootfs_file "${CAMKES_VM_IMAGES_DIR}/zcu102/rootfs.cpio.gz")
+    AddToFileServer("linux-initrd" ${rootfs_file})
+    # Updated dtb based on initrd
+    UpdateDtbFromInitrd(
+        "${CAMKES_VM_IMAGES_DIR}/zcu102/linux-dtb"
+        ${rootfs_file}
+        "0x4d700000"
         dtb_gen_target
         output_dtb_location
     )

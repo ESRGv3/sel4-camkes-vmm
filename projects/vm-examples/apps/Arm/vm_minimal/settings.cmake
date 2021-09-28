@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 #
 
-set(supported "tk1;tx1;tx2;exynos5422;qemu-arm-virt;odroidc2")
+set(supported "tk1;tx1;tx2;exynos5422;qemu-arm-virt;odroidc2;zynqmp")
 if(NOT "${PLATFORM}" IN_LIST supported)
     message(FATAL_ERROR "PLATFORM: ${PLATFORM} not supported.
          Supported: ${supported}")
