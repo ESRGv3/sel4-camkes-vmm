@@ -25,7 +25,6 @@ static const char *plat_keep_devices[] = {
     "/apb-pclk",
     "/platform@c000000",
     "/pmu",
-    "/flash@0",
     "/psci",
 };
 static const char *plat_keep_device_and_disable[] = {};
