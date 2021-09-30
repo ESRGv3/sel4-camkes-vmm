@@ -28,14 +28,14 @@ assembly {
             "linux_ram_paddr_base" : VAR_STRINGIZE(VM_RAM_BASE),
             "linux_ram_size" : VAR_STRINGIZE(VM_RAM_SIZE),
             "linux_ram_offset" : VAR_STRINGIZE(VM_RAM_OFFSET),
-            "dtb_addr" : "",
-            "initrd_max_size" : "",
-            "initrd_addr" : ""
+            "dtb_addr" : VAR_STRINGIZE(VM_DTB_ADDR),
+            "initrd_max_size" : VAR_STRINGIZE(VM_INITRD_MAX_SIZE),
+            "initrd_addr" : VAR_STRINGIZE(VM_INITRD_ADDR)
         };
 
         vm0.linux_image_config = {
-            "linux_bootcmdline" : "",
-            "linux_stdout" : "",
+            "linux_bootcmdline" : "earlycon console=ttyPS0,115200n8 clk_ignore_unused carrier_timeout=0",
+            "linux_stdout" : "/amba/serial@ff010000",
         };
         vm0.num_vcpus = 2;
 

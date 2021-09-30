@@ -28,22 +28,22 @@ assembly {
             "linux_ram_paddr_base" : VAR_STRINGIZE(VM_RAM_BASE),
             "linux_ram_size" : VAR_STRINGIZE(VM_RAM_SIZE),
             "linux_ram_offset" : VAR_STRINGIZE(VM_RAM_OFFSET),
-            "dtb_addr" : VAR_STRINGIZE(VM_DTB_ADDR),
-            "initrd_max_size" : VAR_STRINGIZE(VM_INITRD_MAX_SIZE),
-            "initrd_addr" : VAR_STRINGIZE(VM_INITRD_ADDR)
+            "dtb_addr" : "",
+            "initrd_max_size" : "",
+            "initrd_addr" : "",
         };
 
         vm0.num_vcpus = 2;
 
-        vm.affinity = 1;
-
         vm0.linux_image_config = {
-            "linux_bootcmdline" : "earlycon console=ttyPS0,115200n8",
-            "linux_stdout" : "/amba/serial@ff010000",
+            "linux_name": "baremetal",
+            "initrd_name": "",
+            "linux_bootcmdline" : "",
+            "linux_stdout" : "",
         };
 
         vm0.dtb = dtb([
-            {"path": "/amba/serial@ff010000"},
+            {"path": "/amba/serial@ff000000"},
         ]);
 
         vm0.untyped_mmios = [

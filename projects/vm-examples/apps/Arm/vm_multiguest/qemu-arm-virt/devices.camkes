@@ -38,9 +38,7 @@ assembly {
             "linux_stdout" : "/pl011@9000000",  
         };
         vm0.num_vcpus = 2;
-        vm0.vcpu_affinity = {
-            "aff": [2, 3]
-        };
+        vm0.vcpu_affinity = [2, 3];
 
         vm0.dtb = dtb([
                         {"path": "/pl011@9000000"},
@@ -69,9 +67,7 @@ assembly {
         };
 
         vm1.num_vcpus = 2;
-        vm1.vcpu_affinity = {
-            "aff": [0, 1]
-        };
+        vm1.vcpu_affinity = [0, 1];
 
         vm1.dtb = dtb([
             {"path": "/virtio_mmio@a003000"},

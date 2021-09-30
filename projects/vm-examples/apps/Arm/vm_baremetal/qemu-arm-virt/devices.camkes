@@ -31,7 +31,7 @@ assembly {
             "linux_name": "baremetal",
             "initrd_name": "",
             "linux_bootcmdline" : "",
-            "linux_stdout" : "/pl011@9000000",  
+            "linux_stdout" : "",  
         };
         vm0.num_vcpus = 2;
         vm0.affinity = 3;
