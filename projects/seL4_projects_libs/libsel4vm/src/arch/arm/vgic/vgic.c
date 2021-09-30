@@ -953,7 +953,7 @@ static memory_fault_result_t handle_vgic_dist_write_fault(vm_t *vm, vm_vcpu_t *v
     case RANGE32(0xF04, 0xF0C):
         break;
     case RANGE32(GIC_DIST_CPENDSGIR0, GIC_DIST_SPENDSGIRN):
-        assert(!"vgic SGI reg not implemented!\n");
+        ZF_LOGE("vgic SGI reg not implemented!\n");
         break;
     case RANGE32(0xF30, 0xFBC):
         /* Reserved */
