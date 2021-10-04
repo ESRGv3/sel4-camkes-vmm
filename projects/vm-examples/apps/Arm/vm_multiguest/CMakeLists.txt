@@ -21,12 +21,12 @@ endif()
 
 find_package(camkes-vm-linux REQUIRED)
 include(${CAMKES_VM_LINUX_HELPERS_PATH})
-AddToFileServer("baremetal" "${CAMKES_VM_IMAGES_DIR}/qemu-arm-virt/baremetal")
-set(rootfs_file "${CAMKES_VM_IMAGES_DIR}/qemu-arm-virt/rootfs.cpio.gz")
-AddToFileServer("linux" "${CAMKES_VM_IMAGES_DIR}/qemu-arm-virt/linux")
+AddToFileServer("baremetal" "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/baremetal")
+set(rootfs_file "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/rootfs.cpio.gz")
+AddToFileServer("linux" "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/linux")
 AddToFileServer("linux-initrd" ${rootfs_file})
 UpdateDtbFromInitrd(
-    "${CAMKES_VM_IMAGES_DIR}/qemu-arm-virt/linux-dtb"
+    "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/linux-dtb"
     ${rootfs_file}
     "0x4be00000"
     dtb_gen_target
