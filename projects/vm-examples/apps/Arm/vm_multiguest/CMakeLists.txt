@@ -21,19 +21,9 @@ endif()
 
 find_package(camkes-vm-linux REQUIRED)
 include(${CAMKES_VM_LINUX_HELPERS_PATH})
-AddToFileServer("baremetal" "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/baremetal")
-set(rootfs_file "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/rootfs.cpio.gz")
-AddToFileServer("linux" "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/linux")
-AddToFileServer("linux-initrd" ${rootfs_file})
-UpdateDtbFromInitrd(
-    "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/linux-dtb"
-    ${rootfs_file}
-    "0x4be00000"
-    dtb_gen_target
-    output_dtb_location
-)
-AddToFileServer("linux-dtb" "${output_dtb_location}" DEPENDS dtb_gen_target)
 
+AddToFileServer("baremetal" "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/baremetal")
+AddToFileServer("linux" "${CAMKES_VM_IMAGES_DIR}/${KernelARMPlatform}/linux")
 
 
 AddCamkesCPPFlag(cpp_flags CONFIG_VARS VmEmmc2NoDMA VmVUSB Tk1DeviceFwd Tk1Insecure)

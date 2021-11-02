@@ -6,42 +6,23 @@
 
 #include <configurations/vm.h>
 
-#define VM_RAM_OFFSET 0x00000000
-#define VM_INITRD_MAX_SIZE 0x3200000 //50 MB
-
-#define VM0_RAM_BASE 0x40000000
-#define VM0_RAM_SIZE 0x8000000
-
-#define VM1_RAM_BASE 0x48000000
-#define VM1_RAM_SIZE 0x8000000
-#define VM1_DTB_ADDR 0x4f000000 //VM1_RAM_BASE + 0x7000000
-#define VM1_INITRD_ADDR 0x4be00000 //VM1_DTB_ADDR - VM_INITRD_MAX_SIZE
-
 assembly {
 	composition {}
 	configuration {
 
         vm0.linux_address_config = {
-            "linux_ram_base" : VAR_STRINGIZE(VM0_RAM_BASE),
-            "linux_ram_paddr_base" : VAR_STRINGIZE(VM0_RAM_BASE),
-            "linux_ram_size" : VAR_STRINGIZE(VM0_RAM_SIZE),
-            "linux_ram_offset" : VAR_STRINGIZE(VM0_RAM_OFFSET),
-            "dtb_addr" : "",
-            "initrd_max_size" : "",
-            "initrd_addr" : "",
+            "linux_ram_base" : "0x40000000",
+            "linux_ram_size" : "0x8000000",
         };
 
         vm0.linux_image_config = {
             "linux_name": "baremetal",
-            "initrd_name": "",
-            "linux_bootcmdline" : "",
-            "linux_stdout" : "",  
         };
         vm0.num_vcpus = 2;
         vm0.vcpu_affinity = [2, 3];
 
         vm0.dtb = dtb([
-                        {"path": "/amba/serial@ff000000"},
+                        {"path": "/amba/serial@ff010000"},
                     ]);
         vm0.mmios = [
                     "0xf9060000:0x1000:12", // Interrupt Controller Virtual CPU //interface (Virtual Machine view)
@@ -51,32 +32,30 @@ assembly {
         ];
 
        vm1.linux_address_config = {
-            "linux_ram_base" : VAR_STRINGIZE(VM1_RAM_BASE),
-            "linux_ram_paddr_base" : VAR_STRINGIZE(VM1_RAM_BASE),
-            "linux_ram_size" : VAR_STRINGIZE(VM1_RAM_SIZE),
-            "linux_ram_offset" : VAR_STRINGIZE(VM_RAM_OFFSET),
-            "dtb_addr" : VAR_STRINGIZE(VM1_DTB_ADDR),
-            "initrd_max_size" : VAR_STRINGIZE(VM_INITRD_MAX_SIZE),
-            "initrd_addr" : VAR_STRINGIZE(VM1_INITRD_ADDR),
+            "linux_ram_base" : "0x48000000",
+            "linux_ram_size" : "0x20000000",
+            "dtb_addr" : "0x5f000000",
         };
 
         vm1.linux_image_config = {
             "linux_name": "linux",
-            "linux_bootcmdline" : "earlycon console=ttyPS0,115200n8 clk_ignore_unused carrier_timeout=0",
-            "linux_stdout" : "/amba/serial@ff010000",
+            "linux_bootcmdline" : "earlycon console=ttyPS0,115200n8 clk_ignore_unused",
+            "linux_stdout" : "/amba/serial@ff000000",
         };
 
         vm1.num_vcpus = 2;
         vm1.vcpu_affinity = [0, 1];
 
         vm1.dtb = dtb([
-            {"path": "/amba/serial@ff010000"},
+            {"path": "/amba/serial@ff000000"},
         ]);
         vm1.mmios = [
-                "0xf9060000:0x1000:12", // Interrupt Controller Virtual CPU terface ////(Virtual Machine view)
+            "0xf9060000:0x1000:12", // Interrupt Controller Virtual CPU terface ////(Virtual Machine view)
         ];
         vm1.untyped_mmios = [   
-                "0x48000000:27", // Linux kernel memory regions
+            "0x48000000:27", // Linux kernel memory regions
+            "0x50000000:28", // Linux kernel memory regions
+            "0x60000000:28", // Linux kernel memory regions
         ];
 	}
 }
