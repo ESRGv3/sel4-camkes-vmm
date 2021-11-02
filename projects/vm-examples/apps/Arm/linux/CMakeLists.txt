@@ -1,9 +1,3 @@
-#
-# Copyright 2018, Data61, CSIRO (ABN 41 687 119 230)
-#
-# SPDX-License-Identifier: BSD-2-Clause
-#
-
 cmake_minimum_required(VERSION 3.8.2)
 
 project(camkes-arm-tk1-vm C)
@@ -128,6 +122,12 @@ elseif("${KernelARMPlatform}" STREQUAL "odroidc2")
         output_dtb_location
     )
     AddToFileServer("linux-dtb" "${output_dtb_location}" DEPENDS dtb_gen_target)
+elseif("${KernelARMPlatform}" STREQUAL "zcu102")
+    find_package(camkes-vm-linux REQUIRED)
+    include(${CAMKES_VM_LINUX_HELPERS_PATH})
+
+    AddToFileServer("linux" "${CAMKES_VM_IMAGES_DIR}/zcu102/linux")
+    AddToFileServer("linux-dtb" "${CAMKES_VM_IMAGES_DIR}/zcu102/linux-dtb")
 endif()
 
 AddCamkesCPPFlag(cpp_flags CONFIG_VARS VmEmmc2NoDMA VmVUSB Tk1DeviceFwd Tk1Insecure)
