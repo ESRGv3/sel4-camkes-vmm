@@ -17,6 +17,11 @@ else()
 	message(FATAL_ERROR "Unsupported")
 endif()
 # Add VM application
-add_subdirectory("apps/${AppArch}/${CAMKES_VM_APP}")
+if(CONFIG_REPO)
+	add_subdirectory("${CONFIG_REPO}/${CAMKES_VM_APP}" "apps/${AppArch}/${CAMKES_VM_APP}")
+else()
+	add_subdirectory("apps/${AppArch}/${CAMKES_VM_APP}")
+endif()
+
 # Should be done adding targets, can now generate the root server and the global configuration
 GenerateCAmkESRootserver()
