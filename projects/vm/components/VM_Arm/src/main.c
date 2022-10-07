@@ -1146,6 +1146,8 @@ int main_continued(void)
 extern const int __attribute__((weak)) base_prio;
 extern const int __attribute__((weak)) num_vcpus;
 
+extern uint64_t boot_counter;
+
 int run(void)
 {
     /* if the base_prio attribute is set, use it */
@@ -1164,6 +1166,9 @@ int run(void)
             NUM_VCPUS = num_vcpus;
         }
     }
+
+    //if (linux_image_config.linux_name[0] == 'l')
+        printf("boottime-vmm %lu\n", boot_counter);
 
     return main_continued();
 }

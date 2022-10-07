@@ -67,6 +67,10 @@
 
 .section .boot.text
 BEGIN_FUNC(_start)
+    adr     x19, boot_counter
+    mrs     x20, cntpct_el0
+    str     x20, [x19]
+
     /* Save x4 and x5 so we don't clobber it */
     mov     x7, x4
     mov     x8, x5

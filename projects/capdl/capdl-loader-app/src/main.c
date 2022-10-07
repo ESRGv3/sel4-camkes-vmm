@@ -2058,6 +2058,9 @@ static void mark_vspace_roots(CDL_Model *spec)
 
 static void init_system(CDL_Model *spec)
 {
+    uint64_t boot_counter = 0xdeadbeef;
+    asm volatile("mrs %0, CNTPCT_EL0" : "=r"(boot_counter));
+    
     seL4_BootInfo *bootinfo = platsupport_get_bootinfo();
     simple_t simple;
 
@@ -2092,6 +2095,8 @@ static void init_system(CDL_Model *spec)
     init_tcbs(spec);
     init_cspace(spec);
     start_threads(spec);
+
+    printf("boottime-capdl %ld\n", boot_counter);
 
     ZF_LOGD("%d of %d CSlots used (%.2LF%%)", get_free_slot(),
             BIT(CONFIG_ROOT_CNODE_SIZE_BITS),

@@ -16,6 +16,10 @@
 
 .section ".text.start"
 BEGIN_FUNC(_start)
+    ldr     x19, =boot_counter
+    mrs     x20, cntpct_el0
+    str     x20, [x19]
+
     adrp    x19, core_stack_alloc
     add     x19, x19, #0xff0
     mov     sp, x19

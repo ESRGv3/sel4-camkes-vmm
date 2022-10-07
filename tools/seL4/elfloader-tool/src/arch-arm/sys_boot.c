@@ -99,6 +99,8 @@ void relocate_below_kernel(void)
  *
  * Unpack images, setup the MMU, jump to the kernel.
  */
+
+uint64_t boot_counter = 0xdeadbeef;
 void main(UNUSED void *arg)
 {
     void *bootloader_dtb = NULL;

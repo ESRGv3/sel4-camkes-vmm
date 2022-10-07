@@ -311,6 +311,8 @@ BOOT_CODE static void release_secondary_cpus(void)
 
 /* Main kernel initialisation function. */
 
+uint64_t boot_counter = 0xdeadbeef;
+
 static BOOT_CODE bool_t try_init_kernel(
     paddr_t ui_p_reg_start,
     paddr_t ui_p_reg_end,
@@ -357,6 +359,7 @@ static BOOT_CODE bool_t try_init_kernel(
 
     /* debug output via serial port is only available from here */
     printf("Bootstrapping kernel\n");
+    printf("boottime-hyp  %llu\n", boot_counter);
 
     /* initialise the platform */
     init_plat();
