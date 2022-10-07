@@ -135,7 +135,7 @@ static int get_guest_image_type(const char *image_name, enum img_type *image_typ
 static int guest_write_address(vm_t *vm, uintptr_t paddr, void *vaddr, size_t size, size_t offset, void *cookie)
 {
     memcpy(vaddr, cookie + offset, size);
-    if (config_set(CONFIG_PLAT_TX1) || config_set(CONFIG_PLAT_TX2)) {
+    if (config_set(CONFIG_PLAT_TX1) || config_set(CONFIG_PLAT_TX2) || config_set(CONFIG_PLAT_ZYNQMP)) {
         seL4_CPtr cap = vspace_get_cap(&vm->mem.vmm_vspace, vaddr);
         if (cap == seL4_CapNull) {
             /* Not sure how we would get here, something has gone pretty wrong */
@@ -209,7 +209,7 @@ static void *load_guest_kernel_image(vm_t *vm, const char *kernel_image_name, ui
     switch (ret_file_type) {
     case IMG_BIN:
         if (config_set(CONFIG_PLAT_TX1) || config_set(CONFIG_PLAT_TX2) || config_set(CONFIG_PLAT_QEMU_ARM_VIRT)
-            || config_set(CONFIG_PLAT_ODROIDC2)) {
+            || config_set(CONFIG_PLAT_ODROIDC2) || config_set(CONFIG_PLAT_ZYNQMP)) {
             /* This is likely an aarch64/aarch32 linux difference */
             load_addr = load_base_addr + 0x80000;
         } else {
