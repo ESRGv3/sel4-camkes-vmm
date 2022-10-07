@@ -130,3 +130,4 @@ config_option(
 add_config_library(arm_vm "${configure_string}")
 
 DeclareCAmkESARMVM(VM)
+DeclareCAmkESARMVM(VMNoComm)

@@ -267,7 +267,7 @@ static int initialise_connections(vm_t *vm, uintptr_t connection_base_addr, cros
             ZF_LOGE("Failed to create event bar (id:%d)", i);
             return -1;
         }
-        connection_curr_addr += dataport_size;
+        connection_curr_addr += 0x1000;
         err = reserve_dataport_memory(vm, dataport, connection_curr_addr, &info[i]);
         if (err) {
             ZF_LOGE("Failed to create dataport bar (id %d)", i);
