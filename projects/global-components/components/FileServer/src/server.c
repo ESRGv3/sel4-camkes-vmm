@@ -31,7 +31,7 @@ void pre_init()
 {
     /* install the _cpio_archive */
     unsigned long cpio_size = _cpio_archive_end - _cpio_archive;
-    muslcsys_install_cpio_interface(_cpio_archive, cpio_size, cpio_get_file);
+    muslcsys_install_cpio_interface(_cpio_archive, cpio_size, (muslcsys_cpio_get_file_fn_t) cpio_get_file);
 }
 
 bool validate_client_fd(int fd, seL4_Word client)
