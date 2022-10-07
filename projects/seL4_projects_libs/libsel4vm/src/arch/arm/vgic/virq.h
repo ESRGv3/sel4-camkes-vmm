@@ -200,7 +200,7 @@ static inline int vgic_find_empty_list_reg(vgic_t *vgic, vm_vcpu_t *vcpu)
     return -1;
 }
 
-extern uint64_t sgi_time;
+uint64_t sgi_time;
 static inline int vgic_vcpu_load_list_reg(vgic_t *vgic, vm_vcpu_t *vcpu, int idx, int group, struct virq_handle *irq)
 {
     vgic_vcpu_t *vgic_vcpu = get_vgic_vcpu(vgic, vcpu->vcpu_id);

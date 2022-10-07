@@ -156,28 +156,28 @@
 //     }
 // }
 
-// void print_cpuid(void)
+void print_cpuid(void)
 {
-    uint32_t cpuid;
-    const char *part = NULL;
-    cpuid = read_cpuid_id();
+    // uint32_t cpuid;
+    // const char *part = NULL;
+    // cpuid = read_cpuid_id();
 
-    if (CPUID_IMPL(cpuid) == CPUID_IMPL_ARM) {
-        part = cpuid_get_arm_part_str(cpuid);
-    }
+    // if (CPUID_IMPL(cpuid) == CPUID_IMPL_ARM) {
+    //     part = cpuid_get_arm_part_str(cpuid);
+    // }
 
-    printf("CPU: %s ", cpuid_get_implementer_str(cpuid));
-    if (CPUID_ARCH(cpuid) != CPUID_ARCH_CPUID) {
-        printf("%s ", cpuid_get_arch_str(cpuid));
-    }
-    if (part == NULL) {
-        printf("Part: 0x%03x ", CPUID_PART(cpuid));
-    } else {
-        printf("%s ", part);
-    }
+    // printf("CPU: %s ", cpuid_get_implementer_str(cpuid));
+    // if (CPUID_ARCH(cpuid) != CPUID_ARCH_CPUID) {
+    //     printf("%s ", cpuid_get_arch_str(cpuid));
+    // }
+    // if (part == NULL) {
+    //     printf("Part: 0x%03x ", CPUID_PART(cpuid));
+    // } else {
+    //     printf("%s ", part);
+    // }
 
-    printf("r%dp%d", CPUID_MAJOR(cpuid), CPUID_MINOR(cpuid));
-    printf("\n");
+    // printf("r%dp%d", CPUID_MAJOR(cpuid), CPUID_MINOR(cpuid));
+    // printf("\n");
 }
 
 int get_cortex_a_part(void)

@@ -73,7 +73,7 @@ static void sys_nop(vm_t *vm, seL4_UserContext *regs)
     ZF_LOGD("NOP syscall from [%s]\n", vm->vm_name);
 }
 
-extern uint64_t sgi_time
+extern uint64_t sgi_time;
 static int handle_syscall(vm_vcpu_t *vcpu)
 {
     seL4_Word syscall, ip;
