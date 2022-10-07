@@ -5,7 +5,13 @@
 #
 cmake_minimum_required(VERSION 3.7.2)
 
-if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/apps/Arm/${CAMKES_VM_APP}")
+if(CONFIG_REPO)
+    set(camkes_vm_config_dir "${CONFIG_REPO}/${CAMKES_VM_APP}")
+else()
+    set(camkes_vm_config_dir "${CMAKE_CURRENT_LIST_DIR}/apps/Arm/${CAMKES_VM_APP}")
+endif()
+
+if(EXISTS "${camkes_vm_config_dir}")
     set(AppArch "Arm" CACHE STRING "" FORCE)
 elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/apps/x86/${CAMKES_VM_APP}")
     set(AppArch "x86" CACHE STRING "" FORCE)
@@ -64,7 +70,7 @@ if(AppArch STREQUAL "Arm")
     endif()
 
     # Add VM application
-    include("${CMAKE_CURRENT_LIST_DIR}/apps/Arm/${CAMKES_VM_APP}/settings.cmake")
+    include("${camkes_vm_config_dir}/settings.cmake")
 
     correct_platform_strings()
 
