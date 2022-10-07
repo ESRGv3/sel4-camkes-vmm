@@ -648,7 +648,7 @@ int install_linux_devices(vm_t *vm)
     int num_vmm_modules = 0;
     for (vmm_module_t *i = __start__vmm_module; i < __stop__vmm_module; i++) {
         test_types[num_vmm_modules] = i;
-        ZF_LOGE("module name: %s", i->name);
+        //  ZF_LOGE("module name: %s", i->name);
         i->init_module(vm, i->cookie);
         num_vmm_modules++;
     }
@@ -935,10 +935,10 @@ static int alloc_vm_device_cap(uintptr_t addr, vm_t *vm, vm_frame_t *frame_resul
     seL4_Word cookie;
     err = vka_utspace_alloc_at(vm->vka, &frame, kobject_get_type(KOBJECT_FRAME, 12), 12, addr, &cookie);
     if (err) {
-        ZF_LOGE("Grabbing the entire cap for device memory");
+        //  ZF_LOGE("Grabbing the entire cap for device memory");
         err = simple_get_frame_cap(vm->simple, (void *)addr, 12, &frame);
         if (err) {
-            ZF_LOGE("Failed to grab the entire cap");
+            //  ZF_LOGE("Failed to grab the entire cap");
             return -1;
         }
     }
@@ -1116,7 +1116,7 @@ int main_continued(void)
     }
 
     /* Load system images */
-    printf("Loading Linux: \'%s\' dtb: \'%s\'\n", linux_image_config.linux_name, linux_image_config.dtb_name);
+    // printf("Loading Linux: \'%s\' dtb: \'%s\'\n", linux_image_config.linux_name, linux_image_config.dtb_name);
     err = load_linux(&vm, linux_image_config.linux_name, linux_image_config.dtb_name, linux_image_config.initrd_name);
     if (err) {
         printf("Failed to load VM image\n");

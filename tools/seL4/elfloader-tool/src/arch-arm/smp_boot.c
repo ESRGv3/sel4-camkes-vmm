@@ -17,6 +17,8 @@
 #include <armv/smp.h>
 #include <armv/machine.h>
 
+#define printf(...)
+
 #if CONFIG_MAX_NUM_NODES > 1
 static volatile int non_boot_lock = 0;
 

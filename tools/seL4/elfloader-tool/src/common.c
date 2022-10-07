@@ -29,6 +29,8 @@
 #include <platform_info.h> // this provides memory_region
 #endif
 
+#define printf(...)
+
 extern char _bss[];
 extern char _bss_end[];
 
@@ -186,6 +188,7 @@ static int load_elf(
 {
     int ret;
     uint64_t min_vaddr, max_vaddr;
+    (void)name;
 
     /* Print diagnostics. */
     printf("ELF-loading image '%s' to %p\n", name, dest_paddr);
@@ -390,7 +393,7 @@ int load_images(
 {
     int ret;
     uint64_t kernel_phys_start, kernel_phys_end;
-    uintptr_t dtb_phys_start, dtb_phys_end;
+    uintptr_t dtb_phys_start, dtb_phys_end UNUSED;
     paddr_t next_phys_addr;
     const char *elf_filename;
     int has_dtb_cpio = 0;

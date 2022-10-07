@@ -248,7 +248,7 @@ static void debug_error(int sysnum)
 {
     char buf[100];
     int i;
-    sprintf(buf, "libsel4muslcsys: Error attempting syscall %d\n", sysnum);
+    // sprintf(buf, "libsel4muslcsys: Error attempting syscall %d\n", sysnum);
     for (i = 0; buf[i]; i++) {
         seL4_DebugPutChar(buf[i]);
     }

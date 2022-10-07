@@ -79,17 +79,17 @@ void relocate_below_kernel(void)
      */
     uintptr_t new_base = kernel_info.virt_region_start - (ROUND_UP(size, MAX_ALIGN_BITS));
     uint32_t offset = start - new_base;
-    printf("relocating from %p-%p to %p-%p... size=0x%x (padded size = 0x%x)\n", start, end, new_base, new_base + size,
-           size, ROUND_UP(size, MAX_ALIGN_BITS));
+    // printf("relocating from %p-%p to %p-%p... size=0x%x (padded size = 0x%x)\n", start, end, new_base, new_base + size,
+    //        size, ROUND_UP(size, MAX_ALIGN_BITS));
 
     memmove((void *)new_base, (void *)start, size);
 
     /* call into assembly to do the finishing touches */
     finish_relocation(offset, _DYNAMIC, new_base);
 #else
-    printf("ERROR: The ELF loader does not support relocating itself. You"
-           " probably need to move the kernel window higher, or the load"
-           " address lower.\n");
+    // printf("ERROR: The ELF loader does not support relocating itself. You"
+    //        " probably need to move the kernel window higher, or the load"
+    //        " address lower.\n");
     abort();
 #endif
 }
@@ -110,9 +110,9 @@ void main(UNUSED void *arg)
     platform_init();
 
     /* Print welcome message. */
-    printf("\nELF-loader started on ");
-    print_cpuid();
-    printf("  paddr=[%p..%p]\n", _text, _end - 1);
+    // printf("\nELF-loader started on ");
+    // print_cpuid();
+    // printf("  paddr=[%p..%p]\n", _text, _end - 1);
 
 #if defined(CONFIG_IMAGE_UIMAGE)
 
@@ -126,7 +126,7 @@ void main(UNUSED void *arg)
 #elif defined(CONFIG_IMAGE_EFI)
 
     if (efi_exit_boot_services() != EFI_SUCCESS) {
-        printf("ERROR: Unable to exit UEFI boot services!\n");
+        // printf("ERROR: Unable to exit UEFI boot services!\n");
         abort();
     }
 
@@ -135,9 +135,9 @@ void main(UNUSED void *arg)
 #endif
 
     if (bootloader_dtb) {
-        printf("  dtb=%p\n", bootloader_dtb);
+        // printf("  dtb=%p\n", bootloader_dtb);
     } else {
-        printf("No DTB passed in from boot loader.\n");
+        // printf("No DTB passed in from boot loader.\n");
     }
 
     /* Unpack ELF images into memory. */
@@ -145,13 +145,13 @@ void main(UNUSED void *arg)
     int ret = load_images(&kernel_info, &user_info, 1, &num_apps,
                           bootloader_dtb, &dtb, &dtb_size);
     if (0 != ret) {
-        printf("ERROR: image loading failed\n");
+        // printf("ERROR: image loading failed\n");
         abort();
     }
 
     if (num_apps != 1) {
-        printf("ERROR: expected to load just 1 app, actually loaded %u apps\n",
-               num_apps);
+        // printf("ERROR: expected to load just 1 app, actually loaded %u apps\n",
+        //        num_apps);
         abort();
     }
     /*
@@ -162,14 +162,14 @@ void main(UNUSED void *arg)
      * Make sure this is not the case.
      */
     relocate_below_kernel();
-    printf("ERROR: Relocation failed, aborting!\n");
+    // printf("ERROR: Relocation failed, aborting!\n");
     abort();
 }
 
 void continue_boot(int was_relocated)
 {
     if (was_relocated) {
-        printf("ELF loader relocated, continuing boot...\n");
+        // printf("ELF loader relocated, continuing boot...\n");
     }
 
     /*
@@ -204,16 +204,16 @@ void continue_boot(int was_relocated)
 #endif /* CONFIG_MAX_NUM_NODES */
 
     if (is_hyp_mode()) {
-        printf("Enabling hypervisor MMU and paging\n");
+        // printf("Enabling hypervisor MMU and paging\n");
         arm_enable_hyp_mmu();
     } else {
-        printf("Enabling MMU and paging\n");
+        // printf("Enabling MMU and paging\n");
         arm_enable_mmu();
     }
 
     /* Enter kernel. The UART may no longer be accessible here. */
     if ((uintptr_t)uart_get_mmio() < kernel_info.virt_region_start) {
-        printf("Jumping to kernel-image entry point...\n\n");
+        // printf("Jumping to kernel-image entry point...\n\n");
     }
 
     ((init_arm_kernel_t)kernel_info.virt_entry)(user_info.phys_region_start,
@@ -224,6 +224,6 @@ void continue_boot(int was_relocated)
                                                 dtb_size);
 
     /* We should never get here. */
-    printf("ERROR: Kernel returned back to the ELF Loader\n");
+    // printf("ERROR: Kernel returned back to the ELF Loader\n");
     abort();
 }
