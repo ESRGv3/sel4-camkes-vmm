@@ -182,6 +182,7 @@ add_compile_options(
     -Wundef
     -Wpointer-arith
     -Wno-nonnull
+    -Wno-stringop-overflow
     #-----------------------------------
     # Configure compiler settings.
     #-----------------------------------
