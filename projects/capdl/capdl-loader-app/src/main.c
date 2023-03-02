@@ -2096,8 +2096,6 @@ static void init_system(CDL_Model *spec)
     init_cspace(spec);
     start_threads(spec);
 
-    printf("boottime-capdl %ld\n", boot_counter);
-
     ZF_LOGD("%d of %d CSlots used (%.2LF%%)", get_free_slot(),
             BIT(CONFIG_ROOT_CNODE_SIZE_BITS),
             ((long double)get_free_slot() / BIT(CONFIG_ROOT_CNODE_SIZE_BITS))

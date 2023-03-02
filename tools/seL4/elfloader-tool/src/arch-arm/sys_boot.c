@@ -112,6 +112,7 @@ void main(UNUSED void *arg)
     /* Print welcome message. */
     // printf("\nELF-loader started on ");
     // print_cpuid();
+    printf("boottime-elf %lu\n", boot_counter);
     // printf("  paddr=[%p..%p]\n", _text, _end - 1);
 
 #if defined(CONFIG_IMAGE_UIMAGE)
